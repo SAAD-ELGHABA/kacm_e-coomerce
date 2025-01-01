@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { FaFootballBall } from "react-icons/fa";
+import React, { useRef, useState } from "react";
+import { FaFootballBall ,FaImage} from "react-icons/fa";
 import { FaCircleNotch, FaCircleCheck, FaCheck } from "react-icons/fa6";
 function AddProduct({ handleaddProduct }) {
     const [info, setInfo] = useState({
@@ -12,7 +12,10 @@ function AddProduct({ handleaddProduct }) {
         company: " ",
         sizeAvailable: [],
         colors: [],
+        quantity : 1,
+        imageUrl: null,
     });
+    const [image, setImage] = useState(null);
     const size = ["S", "M", "L", "XL", "XXL"];
     const colors = [
         "red",
@@ -26,6 +29,22 @@ function AddProduct({ handleaddProduct }) {
         "purple",
         "pink",
     ];
+    const imageProduct = useRef();
+    function displayImage(){
+        const file = imageProduct.current.files[0];
+        setInfo({...info,imageUrl:file});
+        if (file) {
+            const reader = new FileReader();
+            reader.onloadend = () => {
+                setImage(reader.result);
+            };
+            reader.readAsDataURL(file);
+        }
+    }
+    function handleProductInfo(e){
+        e.preventDefault();
+        
+    }
     return (
         <div
             style={{ width: "90vw", height: "90vh" }}
@@ -33,12 +52,12 @@ function AddProduct({ handleaddProduct }) {
         >
             <button
                 type="button"
-                class="btn-close position-absolute top-0 mt-3 end-0 me-4"
+                className="btn-close position-absolute top-0 mt-3 end-0 me-4"
                 onClick={() => handleaddProduct(false)}
                 aria-label="Close"
             ></button>
             <div className="w-100 h-100 d-flex justify-content-center align-items-center">
-                <div className="row h-75 border rounded w-100 bg-light">
+                <div className="row d-flex h-75 border rounded w-100 gap-1">
                     <h3 className="text-dark w-100 text-center py-2">
                         Product's Informations
                     </h3>
@@ -127,7 +146,7 @@ function AddProduct({ handleaddProduct }) {
                     <div className="col bg-white py-2">
                         <div class="form-floating">
                             <select
-                                class="form-select"
+                                className="form-select"
                                 id="floatingSelect"
                                 aria-label="select the section of the product"
                             >
@@ -239,12 +258,13 @@ function AddProduct({ handleaddProduct }) {
                                 ))}
                             </div>
                         </div>
-                        <div class="form-floating my-1 ">
+                        <div className="d-flex justify-content-around">
+                        <div className="form-floating my-1 ">
                             <input
                                 type="text"
-                                class="form-control"
+                                className="form-control"
                                 id="floatingInput4"
-                                placeholder="insert the name of the supported company"
+                                placeholder=" the supported company"
                                 value={info.company}
                                 onChange={(e) =>
                                     setInfo({
@@ -254,12 +274,41 @@ function AddProduct({ handleaddProduct }) {
                                 }
                             />
                             <label for="floatingInput4">
-                                insert the name of the supported company
+                                 the supported company
                             </label>
                         </div>
+                        <div className="form-floating my-1 ">
+                            <input
+                                type="number"
+                                class="form-control"
+                                id="floatingInput4"
+                                placeholder=" the quantity"
+                                value={info.quantity}
+                                onChange={(e) =>
+                                    setInfo({
+                                        ...info,
+                                        quantity: e.target.value,
+                                    })
+                                }
+                            />
+                            <label for="floatingInput4">
+                                 the quantity
+                            </label>
+                        </div>
+                        </div>
                     </div>
-                    <div className="col"></div>
+                    <div className="col bg-white py-2 d-flex justify-content-center align-items-center ">
+                        <div className={`${image ? "":"bg-dark bg-gradient"} w-75 h-100 d-flex justify-content-center align-items-center elementHoverd`} style={{cursor:'pointer',overflow:'hidden'}} onClick={()=>imageProduct.current.click()}>
+                                <img src={image} alt="image product" className={`${image ? "":"d-none"} w-100 `}/>
+                                <FaImage className={image ? "d-none":""}/>
+                                <input type="file" name="" id="" ref={imageProduct} onChange={displayImage} className="d-none" />
+                        </div>
+                    </div>
                 </div>
+            </div>
+            <div className=" w-100 d-flex justify-content-end gap-3 position-absolute bottom-0 align-items-center mb-2 pe-2">
+                <button className="btn btn-success" onClick={handleProductInfo}>save</button>
+                <button className="btn btn-warning">reset</button>
             </div>
         </div>
     );
