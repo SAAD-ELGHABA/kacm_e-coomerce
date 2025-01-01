@@ -1,0 +1,64 @@
+.bg_element_dark{
+    background-color:#2f343d;
+    border-radius: 10px;
+}
+.bg_parent_dark{
+    background-color: #24292e;
+    border-top: 1px solid blue;
+}
+
+.bg_parent_light{
+    background-color: white;
+    border-top: 1px solid blue;
+}
+body{
+    background-color: #24292e;
+}
+
+::-webkit-scrollbar{
+    width: 5px;
+    height: 5px;
+}
+::-webkit-scrollbar-thumb{
+    background-color: blue;
+    border: 1px;
+    border-radius: 5px;
+}
+.scrollNav{
+    overflow: hidden;
+    overflow-y: scroll;
+    width: 200px;
+    height: 500px;
+
+}
+.hover_element_navBar_darkMode:hover{
+    background-color:#393f49;
+    cursor: pointer;
+    color: whitesmoke;
+}
+#image-element:hover{
+    background-color: rgba(0, 0, 0, 0.301);
+}
+.inputs:focus{
+    outline: none;
+}
+#SecondImageSection:hover{
+    border: 2px dashed gray;
+} 
+#hoverText:hover{
+    color: white;
+}
+ .elementHoverd:hover{
+    background-color: rgba(0, 0, 0, 0.301);
+ } 
+ .icons:hover{
+    color: rgba(85, 85, 85, 0.8);
+    
+ }
+ #sidebar{
+    transition: all;
+    transition-duration: 2s;
+ }
+ .size_hover:hover{
+    background-color: rgb(219, 219, 219);
+ }
