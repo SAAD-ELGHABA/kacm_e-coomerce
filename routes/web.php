@@ -3,6 +3,7 @@
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ElementController;
+use App\Http\Controllers\productController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Middleware\AdminMiddleware;
 use Illuminate\Foundation\Application;
@@ -20,3 +21,4 @@ Route::get('/Admin', [ElementController::class, "showHomeAdmin"])->name('Admin')
 
 Route::resource('users', AuthController::class)->except('Home');
 Route::resource('element', ElementController::class);
+Route::resource('product', productController::class);
