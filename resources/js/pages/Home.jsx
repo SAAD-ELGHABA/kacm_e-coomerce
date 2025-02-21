@@ -4,15 +4,15 @@ import NavBar from "./components/NavBar.jsx";
 
 function Home({ data }) {
     const [elements, setElements] = useState([]);
-    console.log(data);
     useEffect(() => {
         setElements(data);
     }, data);
+    console.log(data);
 
     return (
         <div>
             <NavBar />
-            {elements.map((element, index) => (
+            {elements && elements.map((element, index) => (
                 <div key={index} className="my-1">
                     {element.element === "image" ? (
                         <div className="w-100">
@@ -20,6 +20,7 @@ function Home({ data }) {
                                 src={`/storage/${element.dependencies[0]}`}
                                 alt="image"
                                 className="w-100"
+                                style={{height:'550px'}}
                             />
                         </div>
                     ) : null}

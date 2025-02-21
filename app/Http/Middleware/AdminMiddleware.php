@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 use User;
 use Illuminate\Support\Facades\Auth;
+
 class AdminMiddleware
 {
     /**
@@ -18,13 +19,14 @@ class AdminMiddleware
      * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
      */
     public function handle(Request $request, Closure $next): Response
-    {   
-        // if (Auth::check() && Auth::user()->user_type === 'admin') {
-        return $next($request); // Allow access
-        // }
-
+    {
+        if (Auth::check() && Auth::user()->user_type === 'admin') {
+            return $next($request); // Allow access
+        }
+        else{
+            return redirect('users/login');
+        }
         // // Redirect or abort if the user is not an admin
-        // return redirect('/')->with('error', 'Unauthorized access');
         // return inertia('Contact');
-   }
+    }
 }

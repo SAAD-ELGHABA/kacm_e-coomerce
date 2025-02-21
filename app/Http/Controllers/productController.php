@@ -6,6 +6,9 @@ use App\Http\Controllers\Controller;
 use App\Models\Product;
 use GuzzleHttp\Psr7\Response;
 use Illuminate\Http\Request;
+use Inertia\Inertia;
+
+use function PHPSTORM_META\map;
 
 class productController extends Controller
 {
@@ -25,5 +28,9 @@ class productController extends Controller
             "company" => $request['product']['company'],
             "imageUrl" => $request->file("product")['imageUrl']->store("productsImages", "public"),
         ]);
+    }
+    public function show(){
+        $products = Product::all();
+        return inertia('Admin/index', ['products' => $products]);
     }
 }

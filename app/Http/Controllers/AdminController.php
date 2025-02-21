@@ -11,14 +11,12 @@ use Inertia\Inertia;
 class AdminController extends Controller
 {
     public function index()
-    {
+    {   
+        // return response()->json(['message' => 'Admin Controller']);
         return inertia('Admin/index');
-        // $admin = session()->get('Admin');
-        // if (session()->has('Admin') && $admin == true) {
-        //     return inertia('Admin/index', ['name' => 'saad']);
-        // } else {
-        //     return inertia('Auth');
-        // }
-        // dd(session()->all());
+    }
+    public function logout(){
+        Auth::logout();
+        return redirect('users/login');
     }
 }

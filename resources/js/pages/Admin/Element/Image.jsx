@@ -32,7 +32,7 @@ export default function Image({handleData}) {
                     alignItems: "center",
                     justifyContent:'center',
                     cursor: "pointer",
-                    height: "450px",
+                    height: "550px",
                 }}
                 id="image-element"
             >

@@ -14,8 +14,10 @@ import Video from "./Element/Video";
 import Store from "../../pages/Store.jsx";
 import SlideImages from "./Element/SlideImages";
 import AddProduct from "./Element/AddProduct";
-function Content({ style, component, dataElements }) {
-    // console.log(dataElements);
+import Products from "./componentContent/Products";
+
+function Content({ style, component, dataElements ,products}) {
+
 
     const [element, setElement] = useState();
     const handleElement = (Element) => {
@@ -126,6 +128,7 @@ function Content({ style, component, dataElements }) {
                 </div>}
             </>
             )}
+            {component == "products" && <Products products={products}/>}
             <ToastContainer />
         </div>
     );

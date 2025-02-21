@@ -5,6 +5,7 @@ import {
     FaPuzzlePiece,
     FaCaretRight,
     FaArrowLeft,
+    FaProductHunt
 } from "react-icons/fa";
 import DashboardIcon from "@mui/icons-material/Dashboard";
 import { FaArrowRight } from "react-icons/fa6";
@@ -138,6 +139,15 @@ function Sidebar({ style, handlecomponent , handleSidebar , togglesidebar}) {
                             <li>item3 </li>
                         </ul>
                     )}
+                    <li
+                        className="py-2 hover_element_navBar_darkMode  "
+                        onClick={() => {
+                            handlecomponent("products");
+                        }}
+                    >
+                        <FaProductHunt className="w-25" />
+                        Products 
+                    </li>
                 </ul>
             </aside>
         </div>

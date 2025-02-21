@@ -1,3 +1,4 @@
+import { Link } from '@inertiajs/react';
 import React, { useState } from 'react'
 import {FaMoon,FaSun} from 'react-icons/fa';
 function NavAdmin({handleMode}) {
@@ -18,7 +19,7 @@ function NavAdmin({handleMode}) {
                         <li className='d-inline px-1' onClick={handleSitchMode} style={{cursor:'pointer'}}>
                             { switchMode ? <FaSun/> :<FaMoon className='text-dark'/> }
                         </li>
-                        <li className='d-inline px-1'>test</li>
+                        <Link className='d-inline px-1 btn mx-2 btn-outline-light ' style={{fontSize:'12px'}} href='/Admin/logout'>Log Out</Link>
                         <li></li>
                     </ul>
                 </div>

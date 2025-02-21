@@ -1,10 +1,13 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import NavBar from "./components/NavBar";
 import Slider from "./components/Slider.jsx";
 import { FaStar,FaGear, FaPlus } from "react-icons/fa6";
-
+import { productsShared } from "./Admin/index";
 // import CoverflowSlider from './components/CoverflowSlider.jsx'
 function Store({ isAdmin = false ,handleStoreSettings,children,handleaddProduct}) {
+    const {products} = useContext(productsShared);
+    console.log(products);
+    
     const stars = new Array(parseInt(5)).fill("");
     const [isHovered, setIsHovered] = useState(false);
     const [showaddproduct,setshowaddproduct] = useState(false);

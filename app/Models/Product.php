@@ -21,4 +21,9 @@ class Product extends Model
         "company",
         "imageUrl",
     ];
+    protected $casts = [
+        'sizeAvailable' => 'array',
+        'colorsAvailable' => 'array',
+    ];
+    
 }
