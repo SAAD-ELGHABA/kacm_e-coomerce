@@ -36,7 +36,7 @@ Route::middleware(['admin', 'auth'])->group(function () {
     Route::get('/Admin/logout',[AdminController::class, 'logout']);
 });
 
-
+Route::get('/store', [productController::class, 'index']);
 
 
 Route::fallback(function () {

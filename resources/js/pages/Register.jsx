@@ -1,8 +1,13 @@
 import { Link, useForm } from "@inertiajs/react";
-import React from "react";
+import React, { useState } from "react";
 import { router } from "@inertiajs/react";
 import "./components/styles.css";
 export default function AuthAdmin() {
+    const [errorsRes, setErrorsRes] = useState({
+        email: "",
+        password: "",
+        password_confirmation: "",
+    });
     const { data, setData, processing, errors, post } = useForm({
         firstname: "",
         lastname: "",
@@ -12,8 +17,40 @@ export default function AuthAdmin() {
     });
     function submit(e) {
         e.preventDefault();
-        console.log(data);
-        router.post("/users/register", data);
+        router.post("/users/register", data, {
+            onError: (errors) => {
+                setErrorsRes(errors);
+            },
+            onSuccess: (response) => {
+                console.log(response);
+
+                if (response.props.flash.success) {
+                    toast.success(response.props.flash.success, {
+                        position: "bottom-right",
+                        autoClose: 5000,
+                        hideProgressBar: false,
+                        closeOnClick: false,
+                        pauseOnHover: true,
+                        draggable: true,
+                        progress: undefined,
+                        theme: "light",
+                    });
+                    dispatch(LogIn(response.props.auth.user));
+                    localStorage.setItem("token", response.props.flash.token);
+                } else {
+                    toast.error(response.props.flash.error, {
+                        position: "bottom-right",
+                        autoClose: 5000,
+                        hideProgressBar: false,
+                        closeOnClick: false,
+                        pauseOnHover: true,
+                        draggable: true,
+                        progress: undefined,
+                        theme: "light",
+                    });
+                }
+            },
+        });
     }
     console.log(errors);
     return (
@@ -40,6 +77,7 @@ export default function AuthAdmin() {
                     className="form-control"
                     placeholder="enter your first name"
                     onChange={(e) => setData("firstname", e.target.value)}
+                    
                 />
                 <label htmlFor="lastname" className="form-label my-1">
                     Last name
@@ -62,7 +100,13 @@ export default function AuthAdmin() {
                     className="form-control"
                     placeholder="enter your email"
                     onChange={(e) => setData("email", e.target.value)}
+                    style={{
+                        border: `${errorsRes.email ? "1px solid red" : ""}`,
+                    }}
                 />
+                <p className="text-danger">
+                    {errorsRes ? errorsRes.email : ""}
+                </p>
                 <label
                     htmlFor="password"
                     className="form-label form-label my-1"
@@ -76,7 +120,13 @@ export default function AuthAdmin() {
                     className="form-control"
                     id="password"
                     onChange={(e) => setData("password", e.target.value)}
+                    style={{
+                        border: `${errorsRes.password ? "1px solid red" : ""}`,
+                    }}
                 />
+                <p className="text-danger">
+                    {errorsRes ? errorsRes.password : ""}
+                </p>
                 <label
                     htmlFor="password_confirmation"
                     className="form-label form-label my-1"
@@ -92,9 +142,22 @@ export default function AuthAdmin() {
                     onChange={(e) =>
                         setData("password_confirmation", e.target.value)
                     }
+                    style={{
+                        border: `${
+                            errorsRes.password_confirmation
+                                ? "1px solid red"
+                                : ""
+                        }`,
+                    }}
                 />
+                <p className="text-danger">
+                    {errorsRes ? errorsRes.password_confirmation : ""}
+                </p>
                 <div className="my-2">
-                    i have already an account <Link href="/users/login" className="text-danger">Got it</Link>
+                    i have already an account{" "}
+                    <Link href="/users/login" className="text-danger">
+                        Got it
+                    </Link>
                 </div>
                 <button className="btn btn-outline-light w-100 mt-2">
                     Log In

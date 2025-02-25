@@ -12,9 +12,14 @@ use function PHPSTORM_META\map;
 
 class productController extends Controller
 {
+    public function index()
+    {
+        return Inertia::render('Store', [
+            'products' => Product::all()
+        ]);
+    }
     public function store(Request $request)
     {
-        // dd($request['product']['sizeAvailable']);
         Product::create([
             "title" => $request['product']['title'],
             "description" => $request['product']['description'],
@@ -28,9 +33,5 @@ class productController extends Controller
             "company" => $request['product']['company'],
             "imageUrl" => $request->file("product")['imageUrl']->store("productsImages", "public"),
         ]);
-    }
-    public function show(){
-        $products = Product::all();
-        return inertia('Admin/index', ['products' => $products]);
     }
 }

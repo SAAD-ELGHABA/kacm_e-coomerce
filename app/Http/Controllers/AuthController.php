@@ -8,6 +8,7 @@ use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Env;
 use Illuminate\Support\Facades\Auth;
+use Mockery\Generator\StringManipulation\Pass\Pass;
 
 class AuthController extends Controller
 {
@@ -17,58 +18,68 @@ class AuthController extends Controller
             return inertia('LogIn');
         } elseif ($status === 'register') {
             return inertia('Register');
+        } elseif ($status === 'logout') {
+            Auth::logout();
+            return redirect('/users/login');
         }
     }
 
 
     public function Auth(Request $request, $status)
     {
-        try {
-            if ($status === 'login') {
-                $data = $request->validate([
-                    'email' => 'required|email',
-                    'password' => 'required|min:3',
-                ]);
-                $credentials = $request->only('email', 'password'); 
-                if (Auth::attempt($credentials)) {
-                    $user = Auth::user();
-                    if ($user->user_type === 'admin') {
-                        return redirect('/Admin');
-                    } else {
-                        return redirect('users/login'); // Redirect to login if not admin
-                    }
-                }
-
-                return back()->with('error', 'Invalid credentials');
-            } elseif ($status === 'register') {
-                $data = $request->validate([
-                    'firstname' => 'required',
-                    'lastname' => 'required',
-                    'email' => 'required|email',
-                    'password' => 'required|min:3',
-                ]);
-                // $request->session()->put('_token', $token);
-                // $data['password'] = bcrypt($data['password']);
-                User::create([
-                    'firstname' => $data['firstname'],
-                    'lastname' => $data['lastname'],
-                    'email' => $data['email'],
-                    'password' => bcrypt($data['password']),
-                    'user_type' => 'user',
-                    // 'remember_token' => $token,
-                ])->createToken('remember_token')->plainTextToken;
-                dd($data);
-                return response()->json(['message' => 'User created successfully']);
-            }elseif ($status === 'logout') {
-                dd($status);
-                Auth::logout();
-                return redirect()->route('users/login');
-            }
-        } catch (Exception $e) {
-            return redirect('users/login');
+        if (Auth::check() && $status === 'login' || Auth::check() && $status === 'register') {
+            return redirect('/')->with('error', 'You are already logged in');
+        } 
+        elseif (Auth::check() && $status === 'logout') {
+            Auth::logout();
+            return redirect('/users/login')->with('success', 'Logged out successfully');
         }
-        // return redirect()->route('Admin');
-        // } elseif (Auth::attempt($data)) {
+        elseif ($status === 'login') {
+            $data = $request->validate([
+                'email' => ['required', 'email'],
+                'password' => ['required', 'min:3'],
+            ]);
+            $credentials = $request->only('email', 'password');
+            if (Auth::attempt($credentials)) {
+                $user = Auth::user();
+                if ($user->user_type === 'admin') {
+                    return redirect('/Admin');
+                } elseif ($user->user_type === 'user') {
+                    $token = $user->createToken($user->email)->plainTextToken;
+                    return redirect('/')->with([
+                        'success' => 'Welcome back',
+                        'token' => $token,
+                    ]);
+                } else {
+                    return redirect('/users/login')->with('error', 'Invalid credentials');
+                }
+            }
+            return back()->with('error', 'Invalid credentials');
+        } elseif ($status === 'register') {
+            $data = $request->validate([
+                'firstname' => 'required',
+                'lastname' => 'required',
+                'email' => 'required|email',
+                'password' => 'required|min:3|confirmed',
+            ]);
 
+            $user = User::create([
+                'firstname' => $data['firstname'],
+                'lastname' => $data['lastname'],
+                'email' => $data['email'],
+                'password' => $data['password'],
+            ]);
+            if (!$user) {
+                return back()->with('error', 'Account not created');
+            } else {
+                $token = $user->createToken($user->email)->plainTextToken;
+            }
+            return redirect('/users/login')->with(
+                [
+                    'success' => 'Account created successfully',
+                    'token' => $token,
+                ]
+            );
+        }
     }
 }

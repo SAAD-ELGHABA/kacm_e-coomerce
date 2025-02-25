@@ -42,3 +42,24 @@
     border-color: #ff0000;
     box-shadow: 0 0 0 0.2rem rgba(255, 0, 0, 0.1);
 }
+.product img:hover{
+  transform: scale(1.1);
+  transition: 0.5s;
+  filter: brightness(30%);
+}
+.product:hover{
+  overflow: hidden;
+  background-color: #22222296;
+}
+.product{
+  transition-duration: 0.5s;
+  transition-timing-function: ease-in-out;
+}
+.product img{
+  transition-duration: 0.5s;
+  transition-timing-function: ease-in-out;
+}
+.show{
+  transition-duration: 0.5s;
+  transition-timing-function: ease-in-out;
+}

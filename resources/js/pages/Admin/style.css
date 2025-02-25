@@ -11,16 +11,14 @@
     background-color: white;
     border-top: 1px solid blue;
 }
-body{
-    background-color: #24292e;
-}
 
 ::-webkit-scrollbar{
     width: 5px;
     height: 5px;
+    background-color: #2f343d;
 }
 ::-webkit-scrollbar-thumb{
-    background-color: blue;
+    background-color: red;
     border: 1px;
     border-radius: 5px;
 }
