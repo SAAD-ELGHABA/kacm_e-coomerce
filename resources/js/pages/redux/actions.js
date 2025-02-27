@@ -21,3 +21,10 @@ export const Products = (products)=>{
         payload: products
     }
 }
+
+export const get_users = (users)=>{
+    return {
+        type:'GET_USERS',
+        payload : users,
+    }
+}

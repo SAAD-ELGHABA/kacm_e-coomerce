@@ -12,17 +12,7 @@ function Home({ data }) {
         setElements(data);
     }, data);
     const dispatch = useDispatch();
-    useEffect(() => {
-        const promise = async () => {
-            const res = await  userData();
-            if (res) {
-                dispatch(LogIn(res));
-            } else {
-                console.log("error");
-            }
-        }
-        promise();
-    }, [token]);
+    
     
     return (
         <div>

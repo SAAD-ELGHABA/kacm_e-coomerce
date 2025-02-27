@@ -4,12 +4,12 @@
 }
 .bg_parent_dark{
     background-color: #24292e;
-    border-top: 1px solid blue;
+    border-top: 1px solid red;
 }
 
 .bg_parent_light{
     background-color: white;
-    border-top: 1px solid blue;
+    border-top: 1px solid red;
 }
 
 ::-webkit-scrollbar{

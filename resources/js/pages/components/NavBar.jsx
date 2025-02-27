@@ -4,6 +4,13 @@ import { FaPlus } from "react-icons/fa6";
 import { LogIn, LogOut } from "../redux/actions";
 import { useDispatch, useSelector } from "react-redux";
 import { userData } from "../data/userData";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+    faArrowDownWideShort,
+    faBagShopping,
+    faRightFromBracket,
+} from "@fortawesome/free-solid-svg-icons";
+import { faMoon } from "@fortawesome/free-regular-svg-icons";
 export default function NavBar() {
     const token = localStorage.getItem("token");
     const user = useSelector((state) => state.reducer.user);
@@ -19,17 +26,6 @@ export default function NavBar() {
             },
         });
     }
-    useEffect(() => {
-        const promise = async () => {
-            const res = await userData();
-            if (res) {
-                dispatch(LogIn(res));
-            } else {
-                console.log("error");
-            }
-        };
-        promise();
-    }, [token]);
     return (
         <header className="position-sticky top-0 " style={{ zIndex: "999" }}>
             <nav
@@ -90,7 +86,9 @@ export default function NavBar() {
                                     onClick={logout}
                                     className="text-danger ms-3 btn btn-transparent"
                                 >
-                                    Log Out
+                                    <FontAwesomeIcon
+                                        icon={faRightFromBracket}
+                                    />
                                 </button>
                             </div>
                         ) : (
@@ -109,6 +107,13 @@ export default function NavBar() {
                                 </Link>
                             </div>
                         )}
+                    </div>
+                    <div className="text-light">
+                        <FontAwesomeIcon icon={faMoon} />
+                        <FontAwesomeIcon
+                            icon={faBagShopping}
+                            className="ms-4"
+                        />
                     </div>
                 </div>
             </nav>

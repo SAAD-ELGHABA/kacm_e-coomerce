@@ -1,12 +1,14 @@
-import React, { createContext, useState } from "react";
+import React, { createContext, useEffect, useState } from "react";
 import Sidebar from "./Sidebar.jsx";
 import Content from "./Content.jsx";
 import NavAdmin from "./NavAdmin.jsx";
 import "./style.css";
+import { usePage } from "@inertiajs/react";
+import { useDispatch } from "react-redux";
+import { get_users } from "../redux/actions.js";
 export const productsShared = createContext();
 
 function index({ name, data, products }) {
-    console.log(products);
     const [mode, setMode] = useState(true);
     const [component, setComponent] = useState("Dashboard1");
     const handleMode = (mode) => {
@@ -19,12 +21,19 @@ function index({ name, data, products }) {
     function handleSidebar(toggle) {
         settogglesidebar(toggle);
     }
+    const dispatch = useDispatch();
+    const { users } = usePage().props;
+    useEffect(()=>{
+        dispatch(get_users(users.users))
+    },[users]);
+    
+
     return (
         <div
             className={`text-light lead px-5 py-5 ${
                 mode ? "bg_parent_dark" : "bg_parent_light"
             }  scroll`}
-            style={{ height: "100vh" }}
+            style={{ height: "100%" }}
         >
             <NavAdmin handleMode={handleMode} />
             <div

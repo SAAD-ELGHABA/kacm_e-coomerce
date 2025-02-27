@@ -2,16 +2,11 @@
 
 namespace App\Http\Middleware;
 
-use App\Models\User as ModelsUser;
 use Closure;
-// use Illuminate\Container\Attributes\Auth;
-use Illuminate\Foundation\Auth\User as AuthUser;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
-use User;
-use Illuminate\Support\Facades\Auth;
 
-class AdminMiddleware
+class Authenticate
 {
     /**
      * Handle an incoming request.
@@ -20,11 +15,14 @@ class AdminMiddleware
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if (Auth::check() && Auth::user()->user_type === 'admin') {
-            return $next($request); // Allow access
+        if (!$request->expectsJson()) {
+            return redirect('users/login'); // Redirect to React login page
         }
-        else{
-            return redirect('users/login');
+    }
+    protected function redirectTo($request)
+    {
+        if (!$request->expectsJson()) {
+            return redirect('users/login'); // Ensure this matches your React Inertia login page
         }
     }
 }

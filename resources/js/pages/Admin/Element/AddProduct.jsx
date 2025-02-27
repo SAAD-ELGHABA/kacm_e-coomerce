@@ -1,22 +1,10 @@
-import { useForm } from "@inertiajs/react";
+import { router, useForm } from "@inertiajs/react";
 import Toast from "@/pages/Toast";
 
 import React, { useRef, useState } from "react";
 import { FaFootballBall, FaImage } from "react-icons/fa";
 import { FaCircleNotch, FaCircleCheck, FaCheck } from "react-icons/fa6";
-import { toast } from "react-toastify";
 function AddProduct({ handleaddProduct }) {
-    //"title",
-    // "description",
-    // "prev_price",
-    // "current_price",
-    // "quantity",
-    // "sizeAvailable",
-    // "colorsAvailable",
-    // "category",
-    // "section",
-    // "company",
-    // "imageUrl",
     const [image, setImage] = useState(null);
     const size = ["S", "M", "L", "XL", "XXL"];
     const colors = [
@@ -60,7 +48,7 @@ function AddProduct({ handleaddProduct }) {
     });
     function handleProductinfo(e) {
         e.preventDefault();
-        post("/product",data);
+        router.post("/product/AddProduct",data);
     }
     return (
         <div

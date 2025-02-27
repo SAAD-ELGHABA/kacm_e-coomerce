@@ -6,7 +6,7 @@ import { ToastContainer, toast } from "react-toastify";
 import { useDispatch } from "react-redux";
 import { LogIn } from "./redux/actions";
 export default function AuthAdmin() {
-    const token = localStorage.getItem('token');
+    const token = localStorage.getItem("token");
     const dispatch = useDispatch();
     const [errorsRes, setErrorsRes] = useState({
         email: "",
@@ -24,8 +24,8 @@ export default function AuthAdmin() {
                 setErrorsRes(errors);
             },
             onSuccess: (response) => {
-                console.log(response);
-                if(response.props.flash.success){
+                if (response.props.flash.success) {
+                    dispatch(LogIn(response.props.auth.user))
                     toast.success(response.props.flash.success, {
                         position: "bottom-right",
                         autoClose: 5000,
@@ -36,8 +36,8 @@ export default function AuthAdmin() {
                         progress: undefined,
                         theme: "light",
                     });
-                    localStorage.setItem('token', response.props.flash.token);
-                }else{
+                    localStorage.setItem("token", response.props.flash.token);
+                } else {
                     toast.error(response.props.flash.error, {
                         position: "bottom-right",
                         autoClose: 5000,
@@ -102,20 +102,35 @@ export default function AuthAdmin() {
                 <p className="text-danger">
                     {errorsRes ? errorsRes.password : ""}
                 </p>
-                <div className="mt-2">
-                    <label
-                        htmlFor="remember"
-                        className="form-label form-label "
-                    >
-                        remember me
-                    </label>
-                    <input
-                        type="checkbox"
-                        name="remember"
-                        className="ms-2"
-                        id="remember"
-                        onChange={(e) => setData("remember", !data.remember)}
-                    />
+                <div className="row mt-2">
+                    <div className=" col-6">
+                        <label
+                            htmlFor="remember"
+                            className="form-label form-label "
+                        >
+                            remember me
+                        </label>
+                        <input
+                            type="checkbox"
+                            name="remember"
+                            className="ms-2"
+                            id="remember"
+                            onChange={(e) =>
+                                setData("remember", !data.remember)
+                            }
+                        />
+                    </div>
+                    <div className="col-6 d-flex justify-content-end">
+                        <Link
+                            href="/forgot-password"
+                            style={{background: "linear-gradient(90deg,white, red)",
+                                WebkitBackgroundClip: 'text',
+                                WebkitTextFillColor: 'transparent',
+                            }}
+                        >
+                            forgot password
+                        </Link>
+                    </div>
                 </div>
                 <div className="my-1">
                     i don't have an account

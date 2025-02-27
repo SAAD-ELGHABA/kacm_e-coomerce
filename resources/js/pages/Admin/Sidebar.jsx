@@ -9,6 +9,8 @@ import {
 } from "react-icons/fa";
 import DashboardIcon from "@mui/icons-material/Dashboard";
 import { FaArrowRight } from "react-icons/fa6";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faUsers } from "@fortawesome/free-solid-svg-icons";
 function Sidebar({ style, handlecomponent , handleSidebar , togglesidebar}) {
     const [toggle, setToggle] = useState({ visibility: false, element: "" });
     const handleelement = (element) => {
@@ -147,6 +149,15 @@ function Sidebar({ style, handlecomponent , handleSidebar , togglesidebar}) {
                     >
                         <FaProductHunt className="w-25" />
                         Products 
+                    </li>
+                    <li
+                        className="py-2 hover_element_navBar_darkMode  "
+                        onClick={() => {
+                            handlecomponent("users");
+                        }}
+                    >
+                        <FontAwesomeIcon icon={faUsers} className="w-25"/>
+                        Users 
                     </li>
                 </ul>
             </aside>

@@ -3,6 +3,8 @@ const initialState = {
     user: null,
 };
 const products = [];
+const users = [];
+
 export const reducer = (state = initialState, action) => {
     switch (action.type) {
         case "LOGIN":
@@ -31,4 +33,14 @@ export const productsReducer = (state = products, action) => {
         default:
             return state;
     }
+}
+
+export const Users = (state=users,action)=>{
+    switch (action.type){
+        case "GET_USERS":
+            return action.payload;
+        default :
+            return state;
+    }
+
 }

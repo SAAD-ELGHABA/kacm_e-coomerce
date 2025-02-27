@@ -15,6 +15,7 @@ import Store from "../../pages/Store.jsx";
 import SlideImages from "./Element/SlideImages";
 import AddProduct from "./Element/AddProduct";
 import Products from "./componentContent/Products";
+import Users from "./componentContent/Users";
 
 function Content({ style, component, dataElements ,products}) {
 
@@ -129,6 +130,7 @@ function Content({ style, component, dataElements ,products}) {
             </>
             )}
             {component == "products" && <Products products={products}/>}
+            {component == "users" && <Users/>}
             <ToastContainer />
         </div>
     );

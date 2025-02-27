@@ -50,13 +50,15 @@
 .product:hover{
   overflow: hidden;
   background-color: #22222296;
+  transition-duration: 1s;
+  transition-timing-function: ease-in-out;
 }
 .product{
   transition-duration: 0.5s;
   transition-timing-function: ease-in-out;
 }
 .product img{
-  transition-duration: 0.5s;
+  transition-duration: 1s;
   transition-timing-function: ease-in-out;
 }
 .show{

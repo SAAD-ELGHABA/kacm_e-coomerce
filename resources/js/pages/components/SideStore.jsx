@@ -2,8 +2,10 @@ import React from 'react'
 
 function SideStore() {
   return (
-    <div>
-        
+    <div className='px-2'>
+        <div>
+          
+        </div>
     </div>
   )
 }
